@@ -1,6 +1,6 @@
 # md2web-plugin
 
-A lightweight, zero-dependency, universally importable Markdown to HTML parser and compiler. Designed for premium styling systems, stateless execution, and cross-platform compatibility across web browsers, Node.js modules, and native Windows Script Host environments.
+A lightweight, zero-dependency, universally importable Markdown to HTML parser and compiler. Designed for styling systems, stateless execution; and cross-platform compatibility across web browsers, Node.js modules, and native Windows Script Host environments.
 
 ---
 

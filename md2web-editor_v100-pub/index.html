@@ -1,0 +1,385 @@
+<!--
+  Copyright (c) 2026:
+  vatofichor - Sebastian Mass     [>_<]
+  & Assisted By Gemini Antigravity /|\
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>md2web-editor</title>
+
+    <!-- Import Extracted stylesheets -->
+    <link rel="stylesheet" href="./editor/css/main.css" type="text/css">
+    <link rel="stylesheet" href="./editor/css/elements.css" type="text/css">
+    <link rel="stylesheet" href="./editor/css/modifiers.css" type="text/css">
+    <link rel="stylesheet" href="./editor/css/preview.css" type="text/css">
+
+    <style>
+        /* Playground Specific Styles */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 20px;
+            background-color: var(--bg-deep);
+            min-height: 100vh;
+        }
+
+        .playground-container {
+            max-width: 1300px;
+            width: 100%;
+            margin: 40px auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 32px;
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-lg), 0 0 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .playground-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .playground-header h1 {
+            margin: 0;
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .playground-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-top: 8px;
+        }
+
+        .editor-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 1100px) {
+            .editor-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Preview Panel Styling */
+        .preview-panel {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            min-height: 450px;
+        }
+
+        .preview-header {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .preview-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Markdown rendered preview custom style overrides */
+        .preview-content h1, .preview-content h2, .preview-content h3, .preview-content h4 {
+            margin-top: 16px;
+            margin-bottom: 8px;
+            background: none;
+            -webkit-text-fill-color: initial;
+            letter-spacing: normal;
+        }
+        .preview-content h1 { font-size: 1.8rem; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+        .preview-content h2 { font-size: 1.5rem; color: var(--secondary); }
+        .preview-content h3 { font-size: 1.25rem; color: var(--primary); }
+        .preview-content h4 { font-size: 1.1rem; color: var(--accent); }
+        .preview-content p { margin-bottom: 12px; color: var(--text-primary); }
+        .preview-content ul, .preview-content ol { padding-left: 20px; margin-bottom: 12px; }
+        .preview-content li { margin: 4px 0; }
+        .preview-content code { background-color: var(--bg-elevated); color: var(--primary); padding: 2px 5px; border-radius: 4px; font-family: monospace; font-size: 0.85em; }
+        .preview-content pre { background-color: var(--bg-deep); padding: 12px; border-radius: 8px; overflow-x: auto; border: 1px solid var(--border); margin-bottom: 12px; }
+        .preview-content pre code { background: none; color: var(--text-primary); padding: 0; border: none; font-size: 0.9em; }
+        .preview-content blockquote { border-left: 4px solid var(--primary); background: rgba(56, 189, 248, 0.08); padding: 10px 15px; margin: 12px 0; border-radius: 0 8px 8px 0; color: var(--text-secondary); }
+        .preview-content table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+        .preview-content th, .preview-content td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
+        .preview-content th { background-color: var(--bg-elevated); font-weight: 600; }
+        .preview-content hr { border: 0; border-top: 1px solid var(--border); margin: 16px 0; }
+
+        /* Button group row */
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+            grid-column: span 2;
+        }
+
+        .button-group button {
+            width: auto;
+            margin: 0;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+
+        .button-group button#copy {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .button-group button#clear {
+            background: var(--bg-elevated);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+        }
+
+        .button-group button#clear:hover {
+            background: var(--error);
+            border-color: var(--error);
+        }
+
+        .button-group button#findrepl {
+            background: var(--bg-elevated);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+        }
+
+        .button-group button#findrepl:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .button-group button#reset {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .button-group button#reset:hover {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+        }
+
+        .shortcuts-tip {
+            margin-top: 20px;
+            padding: 12px 16px;
+            background: rgba(129, 140, 248, 0.08);
+            border: 1px dashed var(--secondary);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .shortcuts-tip kbd {
+            background: var(--bg-elevated);
+            color: var(--primary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="playground-container">
+        <div class="playground-header">
+            <h1>md2web-editor</h1>
+            <p>Standalone extraction of the vanilla Markdown Editor</p>
+        </div>
+
+        <!-- Live Compiler Preview Pane -->
+        <div id="md-preview-container" class="md-preview-container" style="display: none;">
+            <div class="md-preview-header">
+                <span>👁️ Compiler Preview (md2web-plugin)</span>
+                <button type="button" class="md-preview-close" onclick="MDPreview.toggle()">✕ Close Preview</button>
+            </div>
+            <div class="md-preview-body"></div>
+        </div>
+
+        <div class="editor-layout">
+            <!-- Left Side: Markdown Editor -->
+            <div>
+                <form id="notesform">
+                    <!-- Find & Replace Trigger Button -->
+                    <button type="button" id="findrepl" class="tool-button" onclick="FindReplace.toggle()">
+                        🔍 Find & Replace (Alt+H)
+                    </button>
+
+                    <!-- MD-Toolbar Tools -->
+                    <div id="md-toolbar"></div>
+
+                    <!-- Textarea -->
+                    <textarea id="resolution" class="case-notes-input" name="notesform" placeholder="Type Markdown here..." rows="28" autocomplete="off"></textarea>
+
+                    <!-- Bottom Action Buttons -->
+                    <div class="button-group">
+                        <button type="button" name="notesform" id="copy" onclick="copy_starNotes_fields()">
+                            📋 Copy to Clipboard
+                        </button>
+                        <button type="button" name="notesform" id="clear" onclick="reset_form(true)">
+                            🧹 Clear
+                        </button>
+                        <button type="button" name="notesform" id="reset" onclick="window.location.reload();">
+                            🔄 Reset
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Right Side: Live HTML Preview -->
+            <div>
+                <div class="preview-panel">
+                    <div class="preview-header">
+                        <span>👁️ Live HTML Preview</span>
+                        <span style="font-size: 0.75rem; color: var(--text-muted);">Updates as you type</span>
+                    </div>
+                    <div id="preview-box" class="preview-content">
+                        <!-- Rendered Markdown goes here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="shortcuts-tip">
+            <span>💡 Shortcuts: <kbd>Alt+H</kbd> Find & Replace</span>
+            <span>💡 <kbd>Alt+N</kbd> Focus Editor</span>
+            <span>💡 <kbd>Tab</kbd> / <kbd>Shift+Tab</kbd> Indent/Dedent</span>
+        </div>
+    </div>
+
+    <!-- Scripts (loaded in correct order) -->
+    <script src="./editor/js/clipboard_actions.js" type="text/javascript"></script>
+    <script src="./editor/js/meta_copy_fields.js" type="text/javascript"></script>
+    <script src="./editor/js/find_replace.js" type="text/javascript"></script>
+    <script src="./editor/js/md_editor.js" type="text/javascript"></script>
+    <script src="./editor/js/md2web.js" type="text/javascript"></script>
+    <script src="./editor/js/md-preview.js" type="text/javascript"></script>
+    <script src="./editor/js/md-toolbar-tool-generator.js" type="text/javascript"></script>
+    <script src="./editor/js/md-toolbar-fixed-scroll.js" type="text/javascript"></script>
+    <script src="./editor/js/editor_init.js" type="text/javascript"></script>
+
+    <script>
+        // Disable default browser save dialog (Ctrl+S)
+        document.addEventListener('keydown', function (event) {
+            if (event.ctrlKey && event.key === 's') {
+                event.preventDefault();
+                console.log('Intercepted Ctrl+S');
+            }
+        });
+
+        // Setup Decoupled Demo Shortcuts
+        document.addEventListener('keydown', function(event) {
+            if (!event.altKey) return;
+            const key = event.key.toLowerCase();
+            if (key === 'h') {
+                event.preventDefault();
+                if (typeof FindReplace !== 'undefined') FindReplace.toggle();
+            } else if (key === 'n') {
+                event.preventDefault();
+                const res = document.getElementById('resolution');
+                if (res) {
+                    res.focus();
+                    res.selectionStart = res.selectionEnd = res.value.length;
+                }
+            }
+        });
+
+        // Simple Regex-based Markdown Parser for live preview
+        function parseMarkdown(md) {
+            if (!md) return '<p style="color: var(--text-muted); font-style: italic;">Nothing to preview yet. Start typing above...</p>';
+            
+            let html = md;
+
+            // Escape HTML characters
+            html = html.replace(/&/g, '&amp;')
+                       .replace(/</g, '&lt;')
+                       .replace(/>/g, '&gt;');
+
+            // Headers
+            html = html.replace(/^#### (.*?)$/gm, '<h4>$1</h4>');
+            html = html.replace(/^### (.*?)$/gm, '<h3>$1</h3>');
+            html = html.replace(/^## (.*?)$/gm, '<h2>$1</h2>');
+            html = html.replace(/^# (.*?)$/gm, '<h1>$1</h1>');
+
+            // Bold
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            
+            // Italic
+            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            
+            // Blockquotes
+            html = html.replace(/^&gt;[ \t]+?(.*?)$/gm, '<blockquote>$1</blockquote>');
+
+            // Preformatted Code Blocks
+            html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+
+            // Inline Code
+            html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+            // Horizontal Rule
+            html = html.replace(/^---$/gm, '<hr>');
+
+            // Unordered list items with bullet (*) or dash (-)
+            html = html.replace(/^[\t ]*[\-\*][ \t](.+)$/gm, '<li>$1</li>');
+            // Wrap contiguous list items in <ul>
+            html = html.replace(/(<li>.*<\/li>)/g, '<ul>$1</ul>');
+            // Fix double nested <ul> lists
+            html = html.replace(/<\/ul>\s*<ul>/g, '');
+
+            // Task list items
+            html = html.replace(/\[ \] (.+)/g, '<input type="checkbox" disabled style="width:auto; margin:0 5px 0 0;"> $1');
+            html = html.replace(/\[x\] (.+)/g, '<input type="checkbox" checked disabled style="width:auto; margin:0 5px 0 0;"> $1');
+
+            // Line breaks
+            html = html.replace(/\n/g, '<br>');
+            // Fix spacing inside elements
+            html = html.replace(/<br><(h[1-4]|pre|ul|ol|blockquote|table|hr)/g, '<$1');
+            html = html.replace(/<\/(h[1-4]|pre|ul|ol|blockquote|table|hr)><br>/g, '</$1>');
+
+            return html;
+        }
+
+        // Live preview updates
+        const textarea = document.getElementById('resolution');
+        const previewBox = document.getElementById('preview-box');
+
+        function updatePreview() {
+            previewBox.innerHTML = parseMarkdown(textarea.value);
+        }
+
+        textarea.addEventListener('input', updatePreview);
+        
+        // Initial update with placeholder or default text
+        textarea.value = "### Markdown Editor Demo\n\nWelcome! This is the standalone markdown editor component.\n\n- **Live Formatting:** Click any toolbar button above to apply Markdown tags.\n- **Keyboard Helpers:** Press `Tab` or `Shift+Tab` to indent/dedent text.\n- **Enter Auto-bullet:** Press `Enter` on any bullet or task item to automatically continue the list.\n- **Find & Replace:** Press `Alt+H` or click the button above to search and replace text.\n\nTry writing some text here!";
+        updatePreview();
+    </script>
+</body>
+</html>

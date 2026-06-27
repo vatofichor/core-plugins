@@ -1,0 +1,143 @@
+/*
+  Copyright (c) 2026:
+  vatofichor - Sebastian Mass     [>_<]
+  & Assisted By Gemini Antigravity /|\
+*/
+
+/* Glassmorphic Live Compiler Preview Container */
+.md-preview-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg), 0 0 32px rgba(0, 0, 0, 0.4);
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: 100vh; /* Expanding down to max container height of =viewport_height */
+    animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.md-preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(15, 23, 42, 0.4);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+
+.md-preview-header span {
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 1.1rem;
+}
+
+.md-preview-close {
+    background: var(--bg-elevated);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: auto;
+    margin: 0;
+    transition: all 0.2s ease;
+}
+
+.md-preview-close:hover {
+    background: var(--error);
+    border-color: var(--error);
+    box-shadow: 0 0 8px rgba(248, 113, 113, 0.4);
+}
+
+.md-preview-body {
+    flex-grow: 1;
+    overflow-y: auto; /* scroll-y yes */
+    padding: 24px;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Metadata Indicator in Preview mode */
+.md-preview-metadata {
+    margin-bottom: 16px;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: flex;
+    gap: 16px;
+}
+
+.md-preview-metadata span strong {
+    color: var(--primary);
+}
+
+/* Beautiful rendering overrides for elements parsed inside the compiler preview */
+.md-preview-body article {
+    width: 100%;
+}
+
+.md-preview-body h1, .md-preview-body h2, .md-preview-body h3, 
+.md-preview-body h4, .md-preview-body h5, .md-preview-body h6 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    background: none;
+    -webkit-text-fill-color: initial;
+    letter-spacing: normal;
+}
+
+.md-preview-body h1 { font-size: 2.2rem; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+.md-preview-body h2 { font-size: 1.8rem; color: var(--secondary); border-bottom: 1px dashed var(--border); padding-bottom: 4px; }
+.md-preview-body h3 { font-size: 1.5rem; color: var(--primary); }
+.md-preview-body h4 { font-size: 1.25rem; color: var(--accent); }
+.md-preview-body p { margin-bottom: 16px; color: var(--text-secondary); line-height: 1.7; }
+.md-preview-body ul, .md-preview-body ol { padding-left: 24px; margin-bottom: 16px; }
+.md-preview-body li { margin: 6px 0; color: var(--text-secondary); }
+.md-preview-body code { background-color: var(--bg-elevated); color: var(--primary); padding: 3px 6px; border-radius: 6px; font-family: monospace; font-size: 0.85em; border: 1px solid var(--border); }
+.md-preview-body pre { background-color: var(--bg-deep); padding: 16px; border-radius: 12px; overflow-x: auto; border: 1px solid var(--border); margin-bottom: 16px; }
+.md-preview-body pre code { background: none; color: var(--text-primary); padding: 0; border: none; font-size: 0.9em; }
+.md-preview-body blockquote { border-left: 4px solid var(--primary); background: rgba(56, 189, 248, 0.06); padding: 12px 20px; margin: 16px 0; border-radius: 0 12px 12px 0; color: var(--text-secondary); font-style: italic; }
+.md-preview-body table { width: 100%; border-collapse: collapse; margin-bottom: 20px; box-shadow: var(--shadow-sm); }
+.md-preview-body th, .md-preview-body td { border: 1px solid var(--border); padding: 10px 14px; text-align: left; }
+.md-preview-body th { background-color: var(--bg-elevated); font-weight: 600; color: var(--primary); }
+.md-preview-body tr:nth-child(even) { background-color: rgba(255, 255, 255, 0.02); }
+.md-preview-body hr { border: 0; border-top: 1px solid var(--border); margin: 24px 0; }
+.md-preview-body img { max-width: 100%; height: auto; border-radius: 8px; margin: 20px auto; display: block; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+
+/* Math rendering styling */
+.md-preview-body .math {
+    font-family: 'Times New Roman', Times, serif;
+    font-style: italic;
+    color: var(--accent);
+    padding: 0 4px;
+}
+
+/* Toolbar active status highlighting */
+.md-toolbar-tool#btn-preview.active {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 0 8px var(--primary-glow);
+    border-color: var(--primary);
+}

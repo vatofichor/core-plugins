@@ -1,0 +1,213 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2026:
+ * vatofichor - Sebastian Mass     [>_<]
+ * & Assisted By Gemini Antigravity /|\  
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+/* MODIFIERS */
+.prevent-select {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.fleft {
+  float: left;
+}
+
+.disabled {
+  text-decoration: line-through;
+  color: lightgray;
+}
+
+.inert-check {
+  display: inline-block;
+  width: 39px;
+  background: black;
+  height: 13px;
+}
+
+.right {
+  display: inline-block;
+  height: 13px;
+  position: absolute;
+  margin-top: 13px;
+  margin-left: -13px;
+}
+
+.center-align {
+  text-align: center;
+}
+
+.no-center {
+  text-align: left;
+}
+
+.hero {
+  height: 99vh;
+  background-color: #f3f3f3;
+  display: flex;
+  flex-direction: row;
+  width: 99vw;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.hero iframe {
+  width: 99vw;
+  min-height: 666px;
+}
+
+.ai {
+  display: block;
+  width: 99vw;
+  height: 9vh;
+}
+
+.roundit {
+  border-radius: 0.9em;
+}
+
+.small-caps {
+  font-variant: small-caps;
+}
+
+.large-text {
+  font-size: 1.13em;
+}
+
+.hide {
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.padding-small {
+  padding: 6px;
+}
+
+.code {
+  font-family: Consolas, Monaco, "Courier New", monospace;
+  font-size: 0.77em;
+  /* 0.75 -> 0.77 (pattern 77?) or 0.66. 0.75 is 3/4. 0.66 is 2/3. 0.66 is fine? Or 0.99. 0.66. */
+}
+
+/* Find & Replace Modal */
+.find-replace-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #222; /* Dark background */
+  color: #fff;
+  border: 1px solid #444;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  z-index: 2200;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 300px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.find-replace-modal.hide {
+  display: none !important;
+}
+
+.find-replace-header {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.find-replace-close {
+  cursor: pointer;
+  color: #888;
+}
+
+.find-replace-close:hover {
+  color: #fff;
+}
+
+.find-replace-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.find-replace-label {
+  font-size: 0.9em;
+  color: #ccc;
+}
+
+.find-replace-input {
+  background-color: #333;
+  border: 1px solid #555;
+  color: #fff;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.find-replace-input:focus {
+  outline: none;
+  border-color: #777;
+}
+
+.find-replace-options {
+  display: flex;
+  gap: 10px;
+  font-size: 0.85em;
+  align-items: center;
+}
+
+.find-replace-checkbox {
+  margin-right: 5px;
+}
+
+.find-replace-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.find-replace-btn {
+  background-color: #444;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.2s;
+}
+
+.find-replace-btn:hover {
+  background-color: #555;
+}
+
+.find-replace-btn:active {
+  background-color: #666;
+}
+
+.find-replace-status {
+  font-size: 0.8em;
+  color: #aaa;
+  margin-top: 5px;
+  height: 1.2em; /* Reserve space */
+}

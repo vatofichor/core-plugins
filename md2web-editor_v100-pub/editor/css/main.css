@@ -1,0 +1,242 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2026:
+ * vatofichor - Sebastian Mass     [>_<]
+ * & Assisted By Gemini Antigravity /|\  
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+:root {
+  /* Modern Aurora-inspired Palette */
+  --bg-deep: #0f172a;
+  --bg-surface: #1e293b;
+  --bg-elevated: #334155;
+
+  --primary: #38bdf8;
+  --primary-glow: rgba(56, 189, 248, 0.4);
+  --secondary: #818cf8;
+  --accent: #c084fc;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --error: #f87171;
+
+  --border: rgba(148, 163, 184, 0.1);
+  --glass-bg: rgba(30, 41, 59, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  /* 2 -> 3 */
+  --shadow-md: 0 3px 6px -1px rgba(0, 0, 0, 0.1), 0 3px 3px -1px rgba(0, 0, 0, 0.06);
+  /* 4->3, 2->3 */
+  --shadow-lg: 0 9px 13px -3px rgba(0, 0, 0, 0.1), 0 3px 6px -3px rgba(0, 0, 0, 0.05);
+  /* 10->9, 15->13, 4->3, 2->3 */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 18px;
+  /* multiple of 3/6/9 */
+  line-height: 1.66;
+  background-color: var(--bg-deep);
+  background-image:
+    radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
+    /* leave 50% */
+    radial-gradient(at 100% 100%, rgba(129, 140, 248, 0.15) 0px, transparent 50%);
+  color: var(--text-primary);
+  min-height: 99vh;
+}
+
+input,
+textarea,
+button {
+  width: 100%;
+  padding: 13px 13px;
+  margin: 9px 0;
+  border-radius: 13px;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-family: inherit;
+  transition: all 0.33s ease;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+button {
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  font-weight: 600;
+  border: none;
+  font-size: 13px;
+  box-shadow: var(--shadow-md);
+}
+
+button:hover {
+  transform: translateY(-1px);
+  /* 1 is ok? 3px? -3px */
+  box-shadow: var(--shadow-lg), 0 0 13px var(--primary-glow);
+  filter: brightness(1.1);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 133px;
+}
+
+code {
+  background-color: var(--bg-surface);
+  color: var(--primary);
+  padding: 3px 6px;
+  border-radius: 6px;
+  font-family: 'Fira Code', 'Cascadia Code', Consolas, monospace;
+  font-size: 0.9em;
+  border: 1px solid var(--border);
+  margin: 9px 0;
+}
+
+pre code {
+  display: block;
+  padding: 13px;
+  overflow-x: auto;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+}
+
+ul {
+  margin: 13px 0;
+}
+
+ul li {
+  margin: 9px 0;
+}
+
+.li-head- {
+  text-decoration: underline;
+}
+
+.li-strong {
+  font-weight: 999;
+  margin-left: 0 !important;
+}
+
+ul li .li-child {
+  padding-left: 13px;
+  list-style-type: circle;
+}
+
+ul li .lists-list {
+  list-style-type: square;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 666;
+  /* 700 -> 666 */
+  color: var(--text-primary);
+  margin-bottom: 0.33rem;
+  letter-spacing: -0.03em;
+  margin-top: 0.33rem;
+}
+
+h1 {
+  font-size: 3.33rem;
+  text-align: center;
+  background: linear-gradient(to right, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 1.33rem 0;
+}
+
+h2 {
+  font-size: 2.33rem;
+}
+
+h3 {
+  font-size: 1.99rem;
+  color: var(--primary);
+}
+
+h4 {
+  font-size: 1.33rem;
+  color: var(--secondary);
+}
+
+h5 {
+  font-size: 1.33rem;
+  color: var(--accent);
+}
+
+h6 {
+  font-size: 1.13rem;
+  color: var(--text-secondary);
+}
+
+p {
+  font-size: 0.99rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.33rem;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: all 0.33s ease;
+  font-weight: 600;
+  /* 500->600? 600 is multiple of 3? 6 */
+}
+
+a:hover {
+  color: var(--accent);
+  text-shadow: 0 0 9px var(--primary-glow);
+}
+
+/* Scrollbar Style */
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-elevated);
+  border-radius: 6px;
+  border: 3px solid var(--bg-deep);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}

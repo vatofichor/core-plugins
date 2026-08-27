@@ -140,6 +140,12 @@ To copy content programmatically, invoke `copy_starNotes_fields()` or access the
 ## License
 Distributed under the MIT License. See individual files for licensing notices.
 
+## Screenshots
+
+![md2web Editor Markup View](dev/readme-screenshots/mdwebeditor-markup.png)
+
+![md2web Editor Split Preview](dev/readme-screenshots/mdwebeditor-preview.png)
+
 ---
 # Copyright (c) 2026:
 # vatofichor - Sebastian Mass     [>_<]

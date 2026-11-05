@@ -2,7 +2,7 @@
 
 > A lightweight, zero-dependency, line-by-line persistent notes scratchpad and canvas for web applications.
 
-Extracted and decoupled from the ContactFlow platform into a standalone drop-in component. ScratchBoard stores snippets and quick notes in browser `localStorage`, pairing a live line-by-line rendering surface (**The Board Canvas**) with a collapsible staging drawer (**The Editor**) powered by a standardized 4-button control container.
+Extracted and decoupled from the [ContactFlow](https://github.com/vatofichor/ContactFlow) platform into a standalone drop-in component. ScratchBoard stores snippets and quick notes in browser `localStorage`, pairing a live line-by-line rendering surface (**The Board Canvas**) with a collapsible staging drawer (**The Editor**) powered by a standardized 4-button control container.
 
 ---
 

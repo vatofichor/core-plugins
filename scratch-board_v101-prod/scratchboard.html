@@ -1,0 +1,70 @@
+<!--
+MIT License
+
+Copyright (c) 2026:
+vatofichor     [>_<]
+& Assisted By Gemini Antigravity /|\  
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+
+<!-- ScratchBoard Complete Component Container -->
+<div class="scratchboard-container">
+    <h2>ScratchBoard</h2>
+
+    <!-- Operational Notifications Bar -->
+    <div id="notifications-scratchboard"></div>
+
+    <span class="scratchboard-explainer">
+        ⚠️ Backup your board regularly. Clearing browser data will erase
+        it.<br>
+        <i>Explainer: Use the ScratchBoard to save snippets. Quick notes
+            persist line-by-line in browser storage.</i>
+    </span>
+
+    <!-- [Part 1] The Board Canvas: Live Line-by-Line Persistent Rendering Surface -->
+    <div id="scratchboard-list" class="roundit"></div>
+
+    <!-- [Part 2] The Staging Editor Toggle & Container -->
+    <label for="editor-scratchboard-toggle"
+        class="btn-scratchboard roundit">Editor</label>
+    <input type="checkbox" id="editor-scratchboard-toggle" hidden>
+
+    <div id="editor-scratchboard">
+        <textarea rows="15" id="text-input-scratchboard"
+            class="padding-small"
+            placeholder="Enter notes here, one per line..."></textarea>
+
+        <!-- Standard 4-Button Controls Container -->
+        <div class="scratchboard-controls" style="margin-top: 8px;">
+            <!-- 1. Save: Persists textarea lines to LocalStorage and refreshes the canvas -->
+            <button id="save-btn-scratchboard"
+                class="btn-scratchboard roundit">Save</button>
+
+            <!-- 2. Choose File: Selects a local .txt file for import -->
+            <label for="scratchboardImport"
+                class="btn-scratchboard roundit"
+                style="cursor: pointer; display: inline-flex;">Choose
+                File</label>
+            <input type="file" id="scratchboardImport" hidden
+                accept=".txt">
+
+            <!-- 3. Import: Ingests, sanitizes, and renders the selected text file -->
+            <button id="scratchboardImportBtn"
+                class="btn-scratchboard roundit"
+                style="border: none;">Import</button>
+
+            <!-- 4. Export: Downloads all active canvas notes as a timestamped text file -->
+            <button onclick="exportScratchBoard()"
+                class="btn-scratchboard roundit"
+                style="border: none;">Export</button>
+        </div>
+    </div>
+</div>
+
+<!-- Standalone Component Script -->
+<script src="js/scratchboard.js"></script>

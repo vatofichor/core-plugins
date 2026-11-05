@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--
+    MIT License
+
+    Copyright (c) 2026:
+    vatofichor     [>_<]
+    & Assisted By Gemini Antigravity /|\  
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScratchBoard - Standalone Component Preview</title>
+    <link rel="stylesheet" href="css/scratchboard.css">
+    <style>
+        :root {
+            --app-bg: #0b0f19;
+            --app-card-bg: #111827;
+            --app-border: #1f2937;
+            --app-header-bg: #0f172a;
+            --app-text: #e2e8f0;
+            --app-muted: #94a3b8;
+            --app-accent: #38bdf8;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--app-bg);
+            color: var(--app-text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: var(--app-header-bg);
+            border-bottom: 1px solid var(--app-border);
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        header .tag {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--app-accent);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        .main-container {
+            max-width: 960px;
+            width: 100%;
+            margin: 32px auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--app-card-bg);
+            border: 1px solid var(--app-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .harness-info {
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 24px;
+            font-size: 0.88rem;
+            line-height: 1.6;
+            color: var(--app-muted);
+        }
+
+        .harness-info h3 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: var(--app-text);
+        }
+
+        .harness-info ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .harness-info code {
+            background: #1e293b;
+            color: #38bdf8;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: Consolas, monospace;
+            font-size: 0.84rem;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--app-muted);
+            border-top: 1px solid var(--app-border);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>
+            <span>📝 ScratchBoard Plugin</span>
+            <span class="tag">Standalone Preview</span>
+        </h1>
+        <div style="font-size: 0.85rem; color: var(--app-muted);">
+            Decoupled & Zero Dependency
+        </div>
+    </header>
+
+    <main class="main-container">
+        <section class="card">
+            <!-- ScratchBoard Complete Component Container -->
+            <div class="scratchboard-container">
+                <h2>ScratchBoard</h2>
+
+                <!-- Operational Notifications Bar -->
+                <div id="notifications-scratchboard"></div>
+
+                <span class="scratchboard-explainer">
+                    ⚠️ Backup your board regularly. Clearing browser data will erase it.<br>
+                    <i>Explainer: Use the ScratchBoard to save snippets. Quick notes persist line-by-line in browser storage.</i>
+                </span>
+
+                <!-- [Part 1] The Board Canvas: Live Line-by-Line Persistent Rendering Surface -->
+                <div id="scratchboard-list" class="roundit"></div>
+
+                <!-- [Part 2] The Staging Editor Toggle & Container -->
+                <label for="editor-scratchboard-toggle" class="btn-scratchboard roundit">Editor</label>
+                <input type="checkbox" id="editor-scratchboard-toggle" hidden>
+
+                <div id="editor-scratchboard">
+                    <textarea rows="15" id="text-input-scratchboard" class="padding-small" placeholder="Enter notes here, one per line..."></textarea>
+
+                    <!-- Standard 4-Button Controls Container -->
+                    <div class="scratchboard-controls" style="margin-top: 8px;">
+                        <!-- 1. Save -->
+                        <button id="save-btn-scratchboard" class="btn-scratchboard roundit">Save</button>
+
+                        <!-- 2. Choose File -->
+                        <label for="scratchboardImport" class="btn-scratchboard roundit" style="cursor: pointer; display: inline-flex;">Choose File</label>
+                        <input type="file" id="scratchboardImport" hidden accept=".txt">
+
+                        <!-- 3. Import -->
+                        <button id="scratchboardImportBtn" class="btn-scratchboard roundit" style="border: none;">Import</button>
+
+                        <!-- 4. Export -->
+                        <button onclick="exportScratchBoard()" class="btn-scratchboard roundit" style="border: none;">Export</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Harness Diagnostics & Reference -->
+            <div class="harness-info">
+                <h3>Testbench Operations</h3>
+                <ul>
+                    <li><strong>Board Canvas:</strong> Displays persistent notes line-by-line. Renders on load and updates immediately when changes are committed.</li>
+                    <li><strong>Button 1 (Save):</strong> Persists textarea content to <code>localStorage['scratchboard_cache']</code> and live-updates the Canvas.</li>
+                    <li><strong>Button 2 (Choose File):</strong> Selects a local <code>.txt</code> notes file for staging.</li>
+                    <li><strong>Button 3 (Import):</strong> Ingests the chosen file, strips formatting/blank lines, and updates the Canvas.</li>
+                    <li><strong>Button 4 (Export):</strong> Generates an instant, timestamped <code>.txt</code> download of all active board notes.</li>
+                    <li><strong>Developer Console:</strong> Programmatic cache clearing via <code>window.clearScratchboardCache()</code> or manual re-bootstrap via <code>window.init_scratchboard()</code>.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        Copyright &copy; 2026 vatofichor [&gt;_&lt;] &amp; Assisted By Gemini Antigravity /|\
+    </footer>
+
+    <!-- Standalone Component Script -->
+    <script src="js/scratchboard.js"></script>
+</body>
+</html>

@@ -6,3 +6,6 @@ Helper Scripts, Plugins, and Other Public Resources I've created or synthesized.
 
 **md2web-plugin_v1-pub**
 : A lightweight, zero-dependency, universally importable Markdown to HTML parser and compiler.
+
+**md-viewer-mini_v100-pub**
+: A turnkey, zero-dependency, plain-paper Markdown reader and drop-in SPA utility.

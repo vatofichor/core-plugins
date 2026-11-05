@@ -9,3 +9,6 @@ Helper Scripts, Plugins, and Other Public Resources I've created or synthesized.
 
 **md-viewer-mini_v100-pub**
 : A turnkey, zero-dependency, plain-paper Markdown reader and drop-in SPA utility.
+
+**scratch-board_v101-prod**
+:  A lightweight, zero-dependency, line-by-line persistent notes scratchpad and canvas that stores web application snippets locally in the browser.
